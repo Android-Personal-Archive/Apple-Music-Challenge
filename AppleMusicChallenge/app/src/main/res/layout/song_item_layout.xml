@@ -17,14 +17,12 @@
             android:id="@+id/iv_artwork"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_weight="1"
             android:layout_margin="10dp"
             tools:src="@tools:sample/avatars" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
@@ -35,20 +33,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 tools:text="The Sound of Madness (Deluxe Version)"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Shinedown"/>
+                tools:text="Shinedown" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:layout_margin="10dp"
             android:layout_gravity="center"
             tools:text="1.29 USD"/>
