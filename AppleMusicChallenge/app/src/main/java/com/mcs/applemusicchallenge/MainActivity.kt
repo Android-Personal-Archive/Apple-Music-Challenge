@@ -6,9 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mcs.applemusicchallenge.adapters.ResultsAdapter
-import com.mcs.applemusicchallenge.fragments.ClassicFragment
-import com.mcs.applemusicchallenge.fragments.PopFragment
-import com.mcs.applemusicchallenge.fragments.RockFragment
+import com.mcs.applemusicchallenge.fragments.BaseFragment
 import com.mcs.applemusicchallenge.injectables.RetrofitClientSingleton
 import com.mcs.applemusicchallenge.interfaces.IGetResultsService
 import com.mcs.applemusicchallenge.pokos.ResultsPOKO
@@ -25,21 +23,18 @@ class MainActivity : AppCompatActivity() {
         val service = RetrofitClientSingleton.retrofitInstance?.create(IGetResultsService::class.java)
         val rockCall = service?.getMeResults(termParam = "rock", mediaParam = "music", entityParam = "song", limitParam = 50)
 
-        lateinit var fragment: Fragment
+        var fragment: Fragment = BaseFragment()
 
         bn_fragment_navigation.setOnNavigationItemSelectedListener{
             when(it.itemId) {
                 R.id.mi_rock -> {
-                    fragment = RockFragment()
                     callApi(rockCall)
                 }
                 R.id.mi_classic -> {
-                    fragment = ClassicFragment()
                     val classicCall = service?.getMeResults(termParam = "classick", mediaParam = "music", entityParam = "song", limitParam = 50)
                     callApi(classicCall)
                 }
                 R.id.mi_pop -> {
-                    fragment = PopFragment()
                     val popCall = service?.getMeResults(termParam = "pop", mediaParam = "music", entityParam = "song", limitParam = 50)
                     callApi(popCall)
                 }
@@ -50,11 +45,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         callApi(rockCall)
-        supportFragmentManager.beginTransaction().replace(R.id.fl_fragment_container, RockFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_fragment_container, fragment).commit()
     }
 
     private fun callApi(call: Call<ResultsPOKO>?){
-        call?.enqueue(object: Callback<ResultsPOKO>{
+        call?.clone()?.enqueue(object: Callback<ResultsPOKO>{
             override fun onFailure(call: Call<ResultsPOKO>, t: Throwable) {
                 Log.e(localClassName, "Error reading JSON")
             }

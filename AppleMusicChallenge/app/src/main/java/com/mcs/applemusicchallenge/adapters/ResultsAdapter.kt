@@ -68,7 +68,7 @@ class ResultsAdapter(context: Context, private val pokoDataSet: ResultsPOKO): Re
         //        val tvAlbum: TextView = songItemView.tv_album
         //        val tvArtist: TextView = songItemView.tv_artist
         //        val tvPrice: TextView = songItemView.tv_price
-        Picasso.get().load(pokoDataSet.results[position].artworkUrl100).into(holder.ivArtwork)
+        Picasso.get().load(pokoDataSet.results[position].artworkUrl60).into(holder.ivArtwork)
         holder.tvAlbum.text = pokoDataSet.results[position].collectionName
         holder.tvArtist.text = pokoDataSet.results[position].artistName
         holder.tvPrice.text = pokoDataSet.results[position].trackPrice.toString()
