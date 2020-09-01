@@ -1,21 +1,29 @@
 package com.mcs.applemusicchallenge
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mcs.applemusicchallenge.adapters.ResultsAdapter
 import com.mcs.applemusicchallenge.fragments.BaseFragment
 import com.mcs.applemusicchallenge.injectables.RetrofitClientSingleton
 import com.mcs.applemusicchallenge.interfaces.IGetResultsService
+import com.mcs.applemusicchallenge.pokos.ResultPOKO
 import com.mcs.applemusicchallenge.pokos.ResultsPOKO
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ResultsAdapter.OnResultItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,12 +69,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 else
                 {
-                    val adapter = ResultsAdapter(this@MainActivity, results)
+                    val adapter = ResultsAdapter(this@MainActivity, results, this@MainActivity)
                     rv_music.adapter = adapter
                     rv_music.layoutManager = LinearLayoutManager(this@MainActivity)
                     rv_music.setHasFixedSize(true)
                 }
             }
         })
+    }
+
+    override fun onItemClick(item: ResultPOKO, position: Int) {
+        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.previewUrl))
+        startActivity(intent)
     }
 }

@@ -4,20 +4,28 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mcs.applemusicchallenge.R
+import com.mcs.applemusicchallenge.pokos.ResultPOKO
 import com.mcs.applemusicchallenge.pokos.ResultsPOKO
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.song_item_layout.view.*
 
-class ResultsAdapter(context: Context, private val pokoDataSet: ResultsPOKO): RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
+class ResultsAdapter(context: Context, private val pokoDataSet: ResultsPOKO, var clickListener: OnResultItemClickListener): RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
     class ResultsViewHolder(songItemView: View): RecyclerView.ViewHolder(songItemView){
         val ivArtwork: ImageView = songItemView.iv_artwork
         val tvAlbum: TextView = songItemView.tv_album
         val tvArtist: TextView = songItemView.tv_artist
         val tvPrice: TextView = songItemView.tv_price
+
+        fun initItemClickListener(item: ResultPOKO, action: OnResultItemClickListener){
+            itemView.setOnClickListener{
+                action.onItemClick(item, adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
@@ -72,5 +80,10 @@ class ResultsAdapter(context: Context, private val pokoDataSet: ResultsPOKO): Re
         holder.tvAlbum.text = pokoDataSet.results[position].collectionName
         holder.tvArtist.text = pokoDataSet.results[position].artistName
         holder.tvPrice.text = pokoDataSet.results[position].trackPrice.toString()
+        holder.initItemClickListener(pokoDataSet.results[position], clickListener)
+    }
+
+    interface OnResultItemClickListener{
+        fun onItemClick(item: ResultPOKO, position: Int)
     }
 }
