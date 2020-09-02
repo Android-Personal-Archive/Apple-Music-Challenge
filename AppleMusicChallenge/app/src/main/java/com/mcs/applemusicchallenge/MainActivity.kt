@@ -19,6 +19,7 @@ import com.mcs.applemusicchallenge.interfaces.IGetResultsService
 import com.mcs.applemusicchallenge.pokos.ResultPOKO
 import com.mcs.applemusicchallenge.pokos.ResultsPOKO
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_base.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
